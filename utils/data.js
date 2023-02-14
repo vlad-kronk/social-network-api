@@ -1,4 +1,4 @@
-const usernames = [
+let usernames = [
    'aspdi',
    'bagoshark',
    'baltim',
@@ -169,15 +169,19 @@ const strings = [
 
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const getRandomUsername = () => {
+const getRandomUsernameNoRepeat = () => {
    const i = Math.floor(Math.random() * usernames.length);
    const result = usernames[i];
    usernames.splice(i, 1);
    return result;
 }
 
+const getRandomUsername = () => {
+   return getRandomArrItem(usernames);
+}
+
 const getRandomString = () => {
    return getRandomArrItem(strings);
 }
 
-module.exports = { getRandomUsername, getRandomString, getRandomArrItem }
+module.exports = { getRandomUsername, getRandomString, getRandomArrItem, getRandomUsernameNoRepeat }

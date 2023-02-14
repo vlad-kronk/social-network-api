@@ -1,6 +1,6 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');
-const { getRandomUsername, getRandomString, getRandomArrItem } = require('./data');
+const { getRandomUsername, getRandomString, getRandomUsernameNoRepeat } = require('./data');
 
 connection.on('error', (err) => err);
 
@@ -47,14 +47,13 @@ connection.once('open', async () => {
       }
       // console.log(tempThoughtsArr);
 
-      const tempUsername = getRandomUsername();
+      const tempUsername = getRandomUsernameNoRepeat();
 
       for (let j = 0; j < 3; j++) {
          await Thought.findOneAndUpdate(
             { _id: tempThoughtsArr[j] },
             { username: tempUsername }
          )
-         // console.log(tempThoughtsArr[j]);
       };
 
       users.push({
@@ -63,10 +62,9 @@ connection.once('open', async () => {
          thoughts: tempThoughtsArr
       });
    }
+   console.log(users);
 
    await User.collection.insertMany(users);
-
-
 
    console.table(users);
    console.info('Seeding complete! 🌱');
