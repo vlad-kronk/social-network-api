@@ -49,76 +49,6 @@ const usernames = [
    'papabody',
    'pathcrakh',
    'phreekjide',
-   'plentymula',
-   'rawhilogi',
-   'replecon',
-   'reveloy',
-   'rollblich',
-   'salpaxwoo',
-   'thiefshay',
-   'twocher',
-   'unshiya',
-   'zestediz',
-   'abmhony',
-   'accula',
-   'airsin',
-   'animeth',
-   'axionsi',
-   'booster',
-   'campyja',
-   'campytreasure',
-   'drummerradio',
-   'earpo',
-   'elementkeeper',
-   'guantocotton',
-   'guantone',
-   'heados',
-   'imette',
-   'inormi',
-   'lawxan',
-   'logicmaid',
-   'mobiloc',
-   'moviesnoop',
-   'nocket',
-   'notesnarrative',
-   'objerr',
-   'punk',
-   'romantichell',
-   'spazer',
-   'storiesha',
-   'topicsch',
-   'valuedim',
-   'vulturegazer',
-   'basentra',
-   'biggatch',
-   'buffyprank',
-   'bullul',
-   'championordi',
-   'crazyomet',
-   'darthtrimble',
-   'flyrk',
-   'girley',
-   'gourarill',
-   'grantconfident',
-   'heareepi',
-   'homeffe',
-   'idiotorma',
-   'ionya',
-   'lolallst',
-   'mintai',
-   'nycrl',
-   'ogicalli',
-   'perfelled',
-   'phator',
-   'phobicfeisty',
-   'presslive',
-   'sandra',
-   'sizzlinproud',
-   'snoopenta',
-   'songal',
-   'talevest',
-   'tillysitu',
-   'warmfighter'
 ]
 
 const strings = [
@@ -246,12 +176,8 @@ const getRandomUsername = () => {
    return result;
 }
 
-const getRandomStringArr = (int) => {
-   const results = [];
-   for (let i = 0; i < int; i++) {
-      results.push(getRandomArrItem(strings));
-   }
-   return results;
+const getRandomString = () => {
+   return getRandomArrItem(strings);
 }
 
-module.exports = { getRandomUsername, getRandomStringArr, getRandomArrItem }
+module.exports = { getRandomUsername, getRandomString, getRandomArrItem }

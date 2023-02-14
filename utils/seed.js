@@ -1,6 +1,6 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');
-const { getRandomUsername, getRandomStringArr, getRandomArrItem } = require('./data');
+const { getRandomUsername, getRandomString, getRandomArrItem } = require('./data');
 
 connection.on('error', (err) => err);
 
@@ -16,9 +16,19 @@ connection.once('open', async () => {
    let thoughts = []
 
    for (let i = 0; i < 150; i++) {
+      let reactions = []
+
+      for (let j = 0; j < 3; j++) {
+         reactions.push({
+            reactionBody: getRandomString(),
+            username: getRandomUsername()
+         })
+      }
+
       thoughts.push({
-         thoughtText: getRandomStringArr(1)[0],
-         username: ""
+         thoughtText: getRandomString(),
+         username: "",
+         reactions: reactions
       })
    }
 

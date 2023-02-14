@@ -4,7 +4,7 @@ const reactionSchema = new Schema(
    {
       reactionId: {
          type: Schema.Types.ObjectId,
-         default: new Schema.Types.ObjectId
+         default: new Schema.Types.ObjectId,
       },
       reactionBody: {
          type: String,
@@ -19,6 +19,8 @@ const reactionSchema = new Schema(
          type: Date,
          default: new Date(),
          get: d => d.toDateString()
-      }
+      },
    }
-)
+);
+
+module.exports = reactionSchema;
