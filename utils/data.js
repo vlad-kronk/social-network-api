@@ -121,129 +121,6 @@ const usernames = [
    'warmfighter'
 ]
 
-const emails = [
-   'aspdi@example.com',
-   'bagoshark@example.com',
-   'baltim@example.com',
-   'cruelmh@example.com',
-   'doodlesumo@example.com',
-   'enecsid@example.com',
-   'fairylol@example.com',
-   'forava@example.com',
-   'funll@example.com',
-   'gamertwist@example.com',
-   'hanger@example.com',
-   'infour@example.com',
-   'islesco@example.com',
-   'loveshuman@example.com',
-   'megsus@example.com',
-   'moom@example.com',
-   'musicle@example.com',
-   'ninjacq@example.com',
-   'nychell@example.com',
-   'onlinewacky@example.com',
-   'papergreat@example.com',
-   'rightsc@example.com',
-   'rodeolo@example.com',
-   'shortra@example.com',
-   'sorbox@example.com',
-   'thackli@example.com',
-   'thamiq@example.com',
-   'trammon@example.com',
-   'twoyeom@example.com',
-   'wirery@example.com',
-   'blondiant@example.com',
-   'brectino@example.com',
-   'chikkavan@example.com',
-   'comtersbu@example.com',
-   'conroest@example.com',
-   'cundaydon@example.com',
-   'glamourgiga@example.com',
-   'gormator@example.com',
-   'greydubya@example.com',
-   'guantomark@example.com',
-   'joshsmarter@example.com',
-   'kenjianch@example.com',
-   'krediafl@example.com',
-   'leveliadv@example.com',
-   'luvteng@example.com',
-   'nexthmic@example.com',
-   'pakenryo@example.com',
-   'papabody@example.com',
-   'pathcrakh@example.com',
-   'phreekjide@example.com',
-   'plentymula@example.com',
-   'rawhilogi@example.com',
-   'replecon@example.com',
-   'reveloy@example.com',
-   'rollblich@example.com',
-   'salpaxwoo@example.com',
-   'thiefshay@example.com',
-   'twocher@example.com',
-   'unshiya@example.com',
-   'zestediz@example.com',
-   'abmhony@example.com',
-   'accula@example.com',
-   'airsin@example.com',
-   'animeth@example.com',
-   'axionsi@example.com',
-   'booster@example.com',
-   'campyja@example.com',
-   'campytreasure@example.com',
-   'drummerradio@example.com',
-   'earpo@example.com',
-   'elementkeeper@example.com',
-   'guantocotton@example.com',
-   'guantone@example.com',
-   'heados@example.com',
-   'imette@example.com',
-   'inormi@example.com',
-   'lawxan@example.com',
-   'logicmaid@example.com',
-   'mobiloc@example.com',
-   'moviesnoop@example.com',
-   'nocket@example.com',
-   'notesnarrative@example.com',
-   'objerr@example.com',
-   'punk@example.com',
-   'romantichell@example.com',
-   'spazer@example.com',
-   'storiesha@example.com',
-   'topicsch@example.com',
-   'valuedim@example.com',
-   'vulturegazer@example.com',
-   'basentra@example.com',
-   'biggatch@example.com',
-   'buffyprank@example.com',
-   'bullul@example.com',
-   'championordi@example.com',
-   'crazyomet@example.com',
-   'darthtrimble@example.com',
-   'flyrk@example.com',
-   'girley@example.com',
-   'gourarill@example.com',
-   'grantconfident@example.com',
-   'heareepi@example.com',
-   'homeffe@example.com',
-   'idiotorma@example.com',
-   'ionya@example.com',
-   'lolallst@example.com',
-   'mintai@example.com',
-   'nycrl@example.com',
-   'ogicalli@example.com',
-   'perfelled@example.com',
-   'phator@example.com',
-   'phobicfeisty@example.com',
-   'presslive@example.com',
-   'sandra@example.com',
-   'sizzlinproud@example.com',
-   'snoopenta@example.com',
-   'songal@example.com',
-   'talevest@example.com',
-   'tillysitu@example.com',
-   'warmfighter@example.com'
-]
-
 const strings = [
    'consequat esse ullamco dolore deserunt ad lorem.',
    'nulla officia et voluptate velit ea dolor laboris veniam.',
@@ -360,19 +237,21 @@ const strings = [
    'laboris do laboris deserunt duis culpa do.'
 ]
 
-const getRandomArrIndex = (arr) => Math.floor(Math.random() * arr.length);
+const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const getRandomUserData = () => {
-   const i = getRandomArrIndex(usernames);
-   return { username: usernames(i), email: emails(i) };
+const getRandomUsername = () => {
+   const i = Math.floor(Math.random() * usernames.length);
+   const result = usernames[i];
+   usernames.splice(i, 1);
+   return result;
 }
 
 const getRandomStringArr = (int) => {
    const results = [];
    for (let i = 0; i < int; i++) {
-      results.push(strings[getRandomArrIndex(strings)]);
+      results.push(getRandomArrItem(strings));
    }
    return results;
 }
 
-module.exports = { getRandomUserData, getRandomStringArr }
+module.exports = { getRandomUsername, getRandomStringArr, getRandomArrItem }

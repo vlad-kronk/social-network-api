@@ -17,7 +17,12 @@ const userSchema = new Schema(
          // only allows valid email addresses to be stored
          match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
       },
-      thoughts: [thoughtSchema],
+      thoughts: [
+         {
+            type: Schema.Types.ObjectId,
+            ref: 'Thought'
+         }
+      ],
       // references other user instances by ID
       friends: [
          {
@@ -37,6 +42,6 @@ const userSchema = new Schema(
 // virtual that returns the total amt of friends the user has
 userSchema.virtual('friendCount').get(function () { return this.friends.length; });
 
-const User = model('user', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;
