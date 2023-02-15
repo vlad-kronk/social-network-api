@@ -59,7 +59,8 @@ connection.once('open', async () => {
       users.push({
          username: tempUsername,
          email: `${tempUsername}@example.com`,
-         thoughts: tempThoughtsArr
+         thoughts: tempThoughtsArr,
+         friends: []
       });
    }
    console.log(users);
