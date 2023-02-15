@@ -7,7 +7,8 @@ const userSchema = new Schema(
          type: String,
          unique: true,
          required: true,
-         trimm: true
+         trim: true,
+         match: [/^[A-Za-z0-9_-]*$/, 'Only letters, numbers, underscores and dashes allowed']
       },
       email: {
          type: String,

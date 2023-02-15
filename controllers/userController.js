@@ -21,7 +21,26 @@ function getSingleUser(req, res) {
       .catch((err) => res.status(500).json(err));
 }
 
+// create a new user
+function createUser(req, res) {
+   User.create(req.body)
+      .then((user) => res.json(user))
+      .catch((err) => res.status(500).json(err));
+}
+
+// update a user by id
+function updateUser(req, res) {
+   User.findOneAndUpdate(
+      { _id: req.params.id },
+      { username: req.body.username }
+   )
+      .then((user) => res.json(`User ${user._id} has been updated.`))
+      .catch((err) => res.status(500).json(err));
+}
+
 module.exports = {
    getUsers,
    getSingleUser,
+   createUser,
+   updateUser,
 }
