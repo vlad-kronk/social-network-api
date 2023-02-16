@@ -18,7 +18,25 @@ function getSingleThought(req, res) {
    ).catch((err) => res.status(500).json(err));
 }
 
+// post a thought
+function createThought(req, res) {
+   Thought.create({
+      thoughtText: req.body.thoughtText,
+      username: req.body.username
+   })
+      .then((thought) => {
+         User.findOneAndUpdate(
+            { _id: req.body.userId },
+            { $push: { thoughts: thought._id } }
+         )
+            .catch((err) => res.status(500).json(err));
+      })
+      .then(() => res.json({ message: 'Thought added!' }))
+      .catch((err) => res.status(500).json(err));
+}
+
 module.exports = {
    getThoughts,
    getSingleThought,
+   createThought,
 }
