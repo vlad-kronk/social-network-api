@@ -20,6 +20,12 @@ const reactionSchema = new Schema(
          default: new Date(),
          get: d => d.toDateString()
       },
+   },
+   {
+      toJSON: {
+         getters: true
+      },
+      id: false,
    }
 );
 
