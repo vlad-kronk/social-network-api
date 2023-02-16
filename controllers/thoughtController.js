@@ -46,9 +46,26 @@ function updateThought(req, res) {
       .catch((err) => res.status(500).json(err));
 }
 
+// delete a thought
+function deleteThought(req, res) {
+   Thought.findOneAndDelete({ _id: req.params.id })
+      .then((thought) => {
+         !thought
+            ? res.status(404).json({ message: 'No thought with that ID' })
+            : res.json({ message: 'Thought deleted.' });
+         User.findOneAndUpdate(
+            { username: thought.username },
+            { $pull: { thoughts: thought._id } }
+         )
+            .catch((err) => res.status(500).json(err));
+      })
+      .catch((err) => res.status(500).json(err))
+}
+
 module.exports = {
    getThoughts,
    getSingleThought,
    createThought,
    updateThought,
+   deleteThought,
 }
