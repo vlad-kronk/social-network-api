@@ -35,8 +35,20 @@ function createThought(req, res) {
       .catch((err) => res.status(500).json(err));
 }
 
+// update a thought
+function updateThought(req, res) {
+   Thought.findOneAndUpdate({ _id: req.params.id }, req.body)
+      .then((thought) => {
+         !thought
+            ? res.status(404).json({ message: 'No thought with that ID' })
+            : res.json({ message: 'Thought updated.' });
+      })
+      .catch((err) => res.status(500).json(err));
+}
+
 module.exports = {
    getThoughts,
    getSingleThought,
    createThought,
+   updateThought,
 }
