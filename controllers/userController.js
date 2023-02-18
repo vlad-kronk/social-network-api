@@ -79,7 +79,7 @@ function addFriend(req, res) {
 function removeFriend(req, res) {
    User.findOneAndUpdate(
       { _id: req.params.id },
-      { $pull: { friends: { _id: req.params.fid } } },
+      { $pull: { friends: req.params.fid } },
       { runValidators: true, new: true }
    )
       .then((user) => {

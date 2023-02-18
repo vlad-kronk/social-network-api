@@ -36,6 +36,10 @@ function createThought(req, res) {
 }
 
 // update a thought
+// req'd body:
+// {
+//    thoughtText: str
+// }
 function updateThought(req, res) {
    Thought.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((thought) => {
@@ -62,10 +66,49 @@ function deleteThought(req, res) {
       .catch((err) => res.status(500).json(err))
 }
 
+// add a reaction
+// req'd body:
+// {
+//    reactionBody: str
+//    username: str
+// }
+function addReaction(req, res) {
+   Thought.findOneAndUpdate(
+      { _id: req.params.id },
+      { $push: { reactions: req.body } }
+   )
+      .then((thought) =>
+         !thought
+            ? res.status(404).json({ message: 'No thought with that ID' })
+            : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err))
+}
+
+// remove a reaction
+function removeReaction(req, res) {
+   console.log(req.params)
+   Thought.findOneAndUpdate(
+      { _id: req.params.id },
+      { $pull: { reactions: { reactionId: req.params.rid } } },
+      { new: true }
+   )
+      .then((thought) => {
+         console.log(thought);
+         !thought
+            ? res.status(404).json({ message: 'No thought with that ID' })
+            : res.json({ message: 'Reaction removed.' })
+
+      })
+      .catch((err) => res.status(500).json(err))
+}
+
 module.exports = {
    getThoughts,
    getSingleThought,
    createThought,
    updateThought,
    deleteThought,
+   addReaction,
+   removeReaction
 }

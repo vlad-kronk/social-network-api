@@ -13,61 +13,61 @@ connection.once('open', async () => {
    // drop existing thoughts
    await Thought.deleteMany({});
 
-   let thoughts = []
+   // let thoughts = []
 
-   for (let i = 0; i < 150; i++) {
-      let reactions = []
+   // for (let i = 0; i < 150; i++) {
+   //    let reactions = []
 
-      for (let j = 0; j < 3; j++) {
-         reactions.push({
-            reactionBody: getRandomString(),
-            username: getRandomUsername()
-         })
-      }
+   //    for (let j = 0; j < 3; j++) {
+   //       reactions.push({
+   //          reactionBody: getRandomString(),
+   //          username: getRandomUsername()
+   //       })
+   //    }
 
-      thoughts.push({
-         thoughtText: getRandomString(),
-         username: "",
-         reactions: reactions
-      })
-   }
+   //    thoughts.push({
+   //       thoughtText: getRandomString(),
+   //       username: "",
+   //       reactions: reactions
+   //    })
+   // }
 
-   const thoughtData = await Thought.collection.insertMany(thoughts);
-   // console.log(thoughtData);
+   // const thoughtData = await Thought.collection.insertMany(thoughts);
+   // // console.log(thoughtData);
 
-   let users = [];
+   // let users = [];
 
-   for (let i = 0; i < 50; i++) {
-      let tempThoughtsArr = [];
+   // for (let i = 0; i < 50; i++) {
+   //    let tempThoughtsArr = [];
 
-      for (let j = 0; j < 3; j++) {
-         const index = i * 3 + j;
-         // console.log(thoughtData.insertedIds);
-         tempThoughtsArr.push(thoughtData.insertedIds[`${index}`]);
-      }
-      // console.log(tempThoughtsArr);
+   //    for (let j = 0; j < 3; j++) {
+   //       const index = i * 3 + j;
+   //       // console.log(thoughtData.insertedIds);
+   //       tempThoughtsArr.push(thoughtData.insertedIds[`${index}`]);
+   //    }
+   //    // console.log(tempThoughtsArr);
 
-      const tempUsername = getRandomUsernameNoRepeat();
+   //    const tempUsername = getRandomUsernameNoRepeat();
 
-      for (let j = 0; j < 3; j++) {
-         await Thought.findOneAndUpdate(
-            { _id: tempThoughtsArr[j] },
-            { username: tempUsername }
-         )
-      };
+   //    for (let j = 0; j < 3; j++) {
+   //       await Thought.findOneAndUpdate(
+   //          { _id: tempThoughtsArr[j] },
+   //          { username: tempUsername }
+   //       )
+   //    };
 
-      users.push({
-         username: tempUsername,
-         email: `${tempUsername}@example.com`,
-         thoughts: tempThoughtsArr,
-         friends: []
-      });
-   }
-   console.log(users);
+   //    users.push({
+   //       username: tempUsername,
+   //       email: `${tempUsername}@example.com`,
+   //       thoughts: tempThoughtsArr,
+   //       friends: []
+   //    });
+   // }
+   // console.log(users);
 
-   await User.collection.insertMany(users);
+   // await User.collection.insertMany(users);
 
-   console.table(users);
+   // console.table(users);
    console.info('Seeding complete! 🌱');
    process.exit(0);
 });

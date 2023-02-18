@@ -1,26 +1,17 @@
-# 18 NoSQL: Social Network API
+# social-network-api
 
-## Your Task
+  ![License Badge](https://img.shields.io/badge/license-MIT-brightgreen)
+ ![Last Commit to Current Repo](https://img.shields.io/github/last-commit/vlad-kronk/social-network-api)
+![Commits a month](https://img.shields.io/github/commit-activity/m/vlad-kronk/social-network-api)
 
-MongoDB is a popular choice for many social networks due to its speed with large amounts of data and flexibility with unstructured data. Over the last part of this course, you’ll use several of the technologies that social networking platforms use in their full-stack applications. Because the foundation of these applications is data, it’s important that you understand how to build and structure the API first.
 
-Your Challenge is to build an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. You’ll use Express.js for routing, a MongoDB database, and the Mongoose ODM. In addition to using the [Express.js](https://www.npmjs.com/package/express) and [Mongoose](https://www.npmjs.com/package/mongoose) packages, you may also optionally use a JavaScript date library of your choice or the native JavaScript `Date` object to format timestamps.
+## Description 
 
-No seed data is provided, so you’ll need to create your own data using Insomnia after you’ve created your API.
-
-Because this application won’t be deployed, you’ll also need to create a walkthrough video that demonstrates its functionality and all of the following acceptance criteria being met. You’ll need to submit a link to the video and add it to the README of your project.
+This social network API is a web interface used to build and maintain a database that keeps track of users, their friends, their thoughts (posts), and other users' reactions to those thoughts. It utilizes MongoDB, a NoSQL database.
 
 ## User Story
 
-```md
-AS A social media startup
-I WANT an API for my social network that uses a NoSQL database
-SO THAT my website can handle large amounts of unstructured data
 ```
-
-## Acceptance Criteria
-
-```md
 GIVEN a social network API
 WHEN I enter the command to invoke the application
 THEN my server is started and the Mongoose models are synced to the MongoDB database
@@ -32,249 +23,112 @@ WHEN I test API POST and DELETE routes in Insomnia
 THEN I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list
 ```
 
-## Mock Up
+## Table of Contents 
+* [Demo](#demo)
+* [Installation](#installation)
+* [API routes](#api-routes)
+* [Features](#features)
+* [License](#license)
+* [Questions](#questions)
 
-The following animations show examples of the application's API routes being tested in Insomnia.
+## Demo
 
-The following animation shows GET routes to return all users and all thoughts being tested in Insomnia:
+<!-- ADD DEMO VID HERE -->
 
-![Demo of GET routes to return all users and all thoughts being tested in Insomnia.](./Assets/18-nosql-homework-demo-01.gif)
 
-The following animation shows GET routes to return a single user and a single thought being tested in Insomnia:
+## Installation
+- Run `npm i` to install the dependencies that have been loaded into the json files.
+- Run `npm start` to start up the server.
 
-![Demo that shows GET routes to return a single user and a single thought being tested in Insomnia.](./Assets/18-nosql-homework-demo-02.gif)
-
-The following animation shows the POST, PUT, and DELETE routes for users being tested in Insomnia:
-
-![Demo that shows the POST, PUT, and DELETE routes for users being tested in Insomnia.](./Assets/18-nosql-homework-demo-03.gif)
-
-In addition to this, your walkthrough video should show the POST, PUT, and DELETE routes for thoughts being tested in Insomnia.
-
-The following animation shows the POST and DELETE routes for a user’s friend list being tested in Insomnia:
-
-![Demo that shows the POST and DELETE routes for a user’s friend list being tested in Insomnia.](./Assets/18-nosql-homework-demo-04.gif)
-
-In addition to this, your walkthrough video should show the POST and DELETE routes for reactions to thoughts being tested in Insomnia.
-
-## Getting Started
-
-Be sure to have MongoDB installed on your machine. Follow the [MongoDB installation guide on The Full-Stack Blog](https://coding-boot-camp.github.io/full-stack/mongodb/how-to-install-mongodb) to install MongoDB locally.
-
-Use the following guidelines to set up your models and API routes:
-
-### Models
-
-**User**:
-
-* `username`
-  * String
-  * Unique
-  * Required
-  * Trimmed
-
-* `email`
-  * String
-  * Required
-  * Unique
-  * Must match a valid email address (look into Mongoose's matching validation)
-
-* `thoughts`
-  * Array of `_id` values referencing the `Thought` model
-
-* `friends`
-  * Array of `_id` values referencing the `User` model (self-reference)
-
-**Schema Settings**:
-
-Create a virtual called `friendCount` that retrieves the length of the user's `friends` array field on query.
-
----
-
-**Thought**:
-
-* `thoughtText`
-  * String
-  * Required
-  * Must be between 1 and 280 characters
-
-* `createdAt`
-  * Date
-  * Set default value to the current timestamp
-  * Use a getter method to format the timestamp on query
-
-* `username` (The user that created this thought)
-  * String
-  * Required
-
-* `reactions` (These are like replies)
-  * Array of nested documents created with the `reactionSchema`
-
-**Schema Settings**:
-
-Create a virtual called `reactionCount` that retrieves the length of the thought's `reactions` array field on query.
-
----
-
-**Reaction** (SCHEMA ONLY)
-
-* `reactionId`
-  * Use Mongoose's ObjectId data type
-  * Default value is set to a new ObjectId
-
-* `reactionBody`
-  * String
-  * Required
-  * 280 character maximum
-
-* `username`
-  * String
-  * Required
-
-* `createdAt`
-  * Date
-  * Set default value to the current timestamp
-  * Use a getter method to format the timestamp on query
-
-**Schema Settings**:
-
-This will not be a model, but rather will be used as the `reaction` field's subdocument schema in the `Thought` model.
-
-### API Routes
-
-**`/api/users`**
-
-* `GET` all users
-
-* `GET` a single user by its `_id` and populated thought and friend data
-
-* `POST` a new user:
-
+## API Routes 
+- **`/api/users`**
+   - `GET` all users
+   - `POST` a new user
 ```json
-// example data
+// required body for POST
 {
-  "username": "lernantino",
-  "email": "lernantino@gmail.com"
+  "username": "test_username",
+  "email": "username@example.com"
 }
 ```
+<br>
 
-* `PUT` to update a user by its `_id`
-
-* `DELETE` to remove user by its `_id`
-
-**BONUS**: Remove a user's associated thoughts when deleted.
-
----
-
-**`/api/users/:userId/friends/:friendId`**
-
-* `POST` to add a new friend to a user's friend list
-
-* `DELETE` to remove a friend from a user's friend list
-
----
-
-**`/api/thoughts`**
-
-* `GET` to get all thoughts
-
-* `GET` to get a single thought by its `_id`
-
-* `POST` to create a new thought (don't forget to push the created thought's `_id` to the associated user's `thoughts` array field)
-
+- **`/api/users/:id`**
+   - `GET` a single user
+   - `PUT` to update a user's username
+   - `DELETE` to delete a user and their associated thoughts
 ```json
-// example data
+// required body for PUT
 {
-  "thoughtText": "Here's a cool thought...",
-  "username": "lernantino",
-  "userId": "5edff358a0fcb779aa7b118b"
+  "username": "new_username"
 }
 ```
+<br>
 
-* `PUT` to update a thought by its `_id`
+- **`/api/users/:id/friends/:fid`**
+   - `POST` to add a user (`:fid`) to the friends list of another user (`:id`)
+   - `DELETE` to remove a user (`:fid`) from the friends list of another user (`:id`)
+<br><br>
 
-* `DELETE` to remove a thought by its `_id`
+- **`/api/thoughts`**
+   - `GET` all thoughts
+   - `POST` a new thought
+```json
+// required body for POST
+{
+   "thoughtText": "here's a cool thought",
+   "username": "test_username",
+   "userId": "63edd9826a41195eb6f67f87"
+}
+```
+<br>
 
----
+- **`/api/thoughts/:id`**
+   - `GET` a single thought
+   - `PUT` to update a thought's text
+   - `DELETE` to delete a thought and its associated reactions
+```json
+// required body for PUT
+{
+   "thoughtText": "here's some cool updated text for my thought"
+}
+```
+<br>
 
-**`/api/thoughts/:thoughtId/reactions`**
+- **`/api/thoughts/:id/reactions`**
+   - `POST` a new reaction to a user's thought (`:id`)
+```json
+// required body for POST
+{
+   "reactionBody": "i thought this post was really neat",
+   "username": "some_other_user" // user that is posting reaction
+}
+```
+<br>
 
-* `POST` to create a reaction stored in a single thought's `reactions` array field
+- **`/api/thoughts/:id/reactions/:rid`**
+   - `DELETE` a reaction (`:rid`) to a user's thought (`:id`)
 
-* `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
+## Features
 
-## Grading Requirements
+- `NoSQL` - Open-source relational database management that doesn't expost the standard structional query language (SQL)
+- `express.js` - Back end web application framework for building RESTful APIs with Node.js.
+- `Node.js` - Used for package managment and to execute the JavaScript code that builds the server-side command line scripting  tool.
+- `JavaScript` - Used to base functionality within the application.
+- `Git` - Version control system used to track source code changes.
 
-> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
->
-> * A repository that has no code
->
-> * A repository that includes a unique name but nothing else
->
-> * A repository that includes only a README file but nothing else
->
-> * A repository that only includes starter code
 
-This Challenge is graded based on the following criteria:
 
-### Deliverables: 10%
+## License
 
-* Your GitHub repository containing your application code.
-
-### Walkthrough Video: 37%
-
-* A walkthrough video that demonstrates the functionality of the social media API must be submitted, and a link to the video should be included in your README file.
-
-  * The walkthrough video must show all of the technical acceptance criteria being met.
-
-  * The walkthrough video must demonstrate how to start the application’s server.
-
-  * The walkthrough video must demonstrate GET routes for all users and all thoughts being tested in Insomnia.
-
-  * The walkthrough video must demonstrate GET routes for a single user and a single thought being tested in Insomnia.
-
-  * The walkthrough video must demonstrate POST, PUT, and DELETE routes for users and thoughts being tested in Insomnia.
-
-  * Walkthrough video must demonstrate POST and DELETE routes for a user’s friend list being tested in Insomnia.
-
-  * Walkthrough video must demonstrate POST and DELETE routes for reactions to thoughts being tested in Insomnia.
-
-### Technical Acceptance Criteria: 40%
-
-* Satisfies all of the preceding acceptance criteria plus the following:
-
-  * Uses the [Mongoose package](https://www.npmjs.com/package/mongoose) to connect to a MongoDB database.
-
-  * Includes User and Thought models outlined in the Challenge instructions.
-
-  * Includes schema settings for User and Thought models as outlined in the Challenge instructions.
-
-  * Includes Reactions as the `reaction` field's subdocument schema in the Thought model.
-
-  * Uses functionality to format queried timestamps properly.
-
-### Repository Quality: 13%
-
-* Repository has a unique name.
-
-* Repository follows best practices for file structure and naming conventions.
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages.
-
-* Repository contains a high-quality README with description and a link to a walkthrough video.
-
-### Bonus: +10 Points
-
-* Application deletes a user's associated thoughts when the user is deleted.
-
-## Review
-
-You are required to submit BOTH of the following for review:
-
-* A walkthrough video demonstrating the functionality of the application and all of the acceptance criteria being met.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
+MIT License
 
 ---
-© 2022 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
+
+## Questions?
+
+Reach out with any questions!
+
+GitHub: [vlad-kronk](https://github.com/vlad-kronk)
+
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jmeyers6/)
